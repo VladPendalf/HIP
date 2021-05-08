@@ -5,84 +5,101 @@ library("car")
 data = swiss
 help(swiss)
 
-#Вариант 2 Бундуки Владислав КМБО-06-20
+#Р’Р°СЂРёР°РЅС‚ 2 Р‘СѓРЅРґСѓРєРё Р’Р»Р°РґРёСЃР»Р°РІ РљРњР‘Рћ-06-20
 
-#Объясняемая переменная Agriculture , регрессоры: Fertility, Education, Catholic
-model = lm(Agriculture ~ Fertility + Education  + Catholic, data)
+#РћР±СЉСЏСЃРЅСЏРµРјР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ Agriculture , СЂРµРіСЂРµСЃСЃРѕСЂС‹: Fertility, Education, Catholic
+#РСЃРїРѕР»СЊР·СѓРµРј Р»СѓС‡С€СѓСЋ РјРѕРґРµР»СЊ, РѕСЃРЅРѕРІС‹РІР°СЏСЃСЊ РЅР° СЂРµР·СѓР»СЊС‚Р°С‚Рµ СЂР°Р±РѕС‚С‹ 2.1 : 
+#"Agriculture ~ I(Fertility^2), I(Education^2), I(Catholic^2), I(Fertility*Education), I(Fertility*Education*Catholic)"
+model = lm(Agriculture ~ I(Fertility^2)+ I(Education^2)+ I(Catholic^2)+ I(Fertility*Education)+ I(Fertility*Education*Catholic), data)
 model
 summary(model)
-#Agriculture = 117.2729 + (-0.78)*Fertility + (-2.01)*Edu + (0.26)Cat
-#R^2 =  0.582
+#Agriculture = 7.919e+01 + (-3.195e-03)*Fertility^2 + (-8.119e-03)*Edu^2 + (2.724e-03)Cat^2 + (-2.640e-02)Fertility*Education +(-6.148e-05)Fertility * Education * Catholic
+#R^2 =  0.5971
 
-# 43 наблюдений и оценивалось 4 коэффициента: 43 - 4 = 39 степени свободы;
+# 43 РЅР°Р±Р»СЋРґРµРЅРёР№ Рё РѕС†РµРЅРёРІР°Р»РѕСЃСЊ 4 РєРѕСЌС„С„РёС†РёРµРЅС‚Р°: 41 - 6 = 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹;
 
-#Оценим доверительные интервалы для Agriculture = 117.2729 + (-0.78)*Fertility + (-2.01)*Edu + (0.26)Cat:
+#РћС†РµРЅРёРј РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Рµ РёРЅС‚РµСЂРІР°Р»С‹ РґР»СЏ Agriculture:
 
-# a) Доверительный интервал для Fertility
-Std_Err = 0.2748
-# Критерий Стьюдента: 95%, 39 степени свободы
-t_critical = qt(0.975, df = 39) # ~2.023
+# a) Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility^2
+Std_Err = 1.952e-03
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
+t_critical = qt(0.975, df = 35) # ~2.03
 model$coefficients[2] - t_critical * Std_Err
 model$coefficients[2] + t_critical * Std_Err
 
-# Доверительный интервал для Fertility = [model$coefficients[2] - t_critical * Std_Err , model$coefficients[2] + t_critical * Std_Err]
-# [-0.78 - 2.023 * 0.2748 ,  -0.78 + 2.023 * 0.2748]
-# [-1.34 ,  -0.23]  -> коэффициент не может быть равным 0
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility = [model$coefficients[2] - t_critical * Std_Err , model$coefficients[2] + t_critical * Std_Err]
+# [-0.007157706 ,  0.0007678357]  -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
 
 
-# Проверка:
+# РџСЂРѕРІРµСЂРєР°:
 confint(model, level = 0.95)
-#                2.5 %      97.5 %
-#(Intercept) 75.233631 159.3121545
-#Fertility   -1.338392  -0.2299865
-#Education   -2.661649  -1.3704634
-#Catholic     0.130171   0.3814702
+#                                       2.5 %          97.5 %
+#(Intercept)                          57.8162199031 1.005651e+02
+#I(Fertility^2)                      -0.0071360925  7.462226e-04
+#I(Education^2)                      -0.0259326469  9.695019e-03
+#I(Catholic^2)                        0.0005238842  4.925086e-03
+#I(Fertility * Education)            -0.0458579729 -6.936649e-03
+#I(Fertility * Education * Catholic) -0.0003922415  2.692765e-04
 
-# б) Доверительный интервал для Education
-Std_Err = 0.3201
-# Критерий Стьюдента: 95%, 39 степени свободы
+# Р±) Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Education^2
+Std_Err = 8.821e-03
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
 model$coefficients[3] - t_critical * Std_Err
 model$coefficients[3] + t_critical * Std_Err
 
-# Доверительный интервал для Education = [model$coefficients[3] - t_critical * Std_Err , model$coefficients[3] + t_critical * Std_Err]
-# [-2.01 - 2.023 * 0.3201 ,  -2.01 + 2.023 * 0.3201]
-# [-2.66 ,  -1.37] -> коэффициент не может быть равным 0
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Education = [model$coefficients[3] - t_critical * Std_Err , model$coefficients[3] + t_critical * Std_Err]
+# [-0.0260264 ,  0.009788768] -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
 
 
-# в) Доверительный интервал для Catholic
-Std_Err = 0.0623
-# Критерий Стьюдента: 95%, 39 степени свободы
+# РІ) Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Catholic^2
+Std_Err = 1.090e-03
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
 model$coefficients[4] - t_critical * Std_Err
 model$coefficients[4] + t_critical * Std_Err
 
-# Доверительный интервал для Education = [model$coefficients[4] - t_critical * Std_Err , model$coefficients[4] + t_critical * Std_Err]
-# [0.26 - 2.023 * 0.0623 ,  0.26 + 2.023 * 0.0623]
-# [0.13 ,  0.38] -> коэффициент не может быть равным 0
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Catholic = [model$coefficients[4] - t_critical * Std_Err , model$coefficients[4] + t_critical * Std_Err]
+# [0.0005116675 ,  0.004937303] -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
 
+# Рі) РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility * Education:
+Std_Err = 9.636e-03
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
+model$coefficients[5] - t_critical * Std_Err
+model$coefficients[5] + t_critical * Std_Err
 
-# г) доверительный интервал для свободного коэф:
-Std_Err = 20.85
-# Критерий Стьюдента: 95%, 39 степени свободы
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility * Education = [model$coefficients[5] - t_critical * Std_Err , model$coefficients[5] + t_critical * Std_Err]
+# [-0.04595943 ,  -0.006835191] -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
+
+# Рґ) РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility * Education * Catholic:
+Std_Err = 1.638e-04
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
+model$coefficients[6] - t_critical * Std_Err
+model$coefficients[6] + t_critical * Std_Err
+
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Fertility * Education * Catholic = [model$coefficients[6] - t_critical * Std_Err , model$coefficients[6] + t_critical * Std_Err]
+# [-0.0003940142 ,  0.0002710492] -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
+
+# Рµ) РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ СЃРІРѕР±РѕРґРЅРѕРіРѕ РєРѕСЌС„:
+Std_Err = 1.058e+01
+# РљСЂРёС‚РµСЂРёР№ РЎС‚СЊСЋРґРµРЅС‚Р°: 95%, 35 СЃС‚РµРїРµРЅРё СЃРІРѕР±РѕРґС‹
 model$coefficients[1] - t_critical * Std_Err
 model$coefficients[1] + t_critical * Std_Err
 
-# Доверительный интервал для Intercept = [model$coefficients[1] - t_critical * Std_Err , model$coefficients[1] + t_critical * Std_Err]
-# [117.2729 - 2.023 * 20.85 ,  117.2729 + 2.023 * 20.85]
-# [75.1 ,  159.45] -> коэффициент не может быть равным 0
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ Intercept = [model$coefficients[1] - t_critical * Std_Err , model$coefficients[1] + t_critical * Std_Err]
+# [57.71211 ,  100.6692] -> РєРѕСЌС„С„РёС†РёРµРЅС‚ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ СЂР°РІРЅС‹Рј 0
 
-# Вывод: Поскольку 0 не попадает в доверительный интервал регрессоров => все регрессоры связаны с объясняемой переменной.
+# Р’С‹РІРѕРґ: РџРѕСЃРєРѕР»СЊРєСѓ 0 РїРѕРїР°РґР°РµС‚ РІ РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» СЂРµРіСЂРµСЃСЃРѕСЂРѕРІ => РЅРµ РІСЃРµ СЂРµРіСЂРµСЃСЃРѕСЂС‹ СЃРІСЏР·Р°РЅС‹ СЃ РѕР±СЉСЏСЃРЅСЏРµРјРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№.
 
-#Построим доверительный интервал для прогноза (Объясняемая переменная: Agriculture, регрессоры: Fertility , Education , Catholic )
-model = lm(Agriculture ~ Fertility + Education  + Catholic, data)
+#РџРѕСЃС‚СЂРѕРёРј РґРѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ РїСЂРѕРіРЅРѕР·Р° (РћР±СЉСЏСЃРЅСЏРµРјР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ: Agriculture, СЂРµРіСЂРµСЃСЃРѕСЂС‹: Fertility , Education , Catholic )
+model = lm(Agriculture ~ I(Fertility^2)+ I(Education^2)+ I(Catholic^2)+ I(Fertility*Education)+ I(Fertility*Education*Catholic), data)
 model
 summary(model)
-#Agriculture = 117.2729 + (-0.78)*Fertility + (-2.01)*Edu + (0.26)Cat
+#Agriculture = 7.919e+01 + (-3.195e-03)*Fertility^2 + (-8.119e-03)*Edu^2 + (2.724e-03)Cat^2 + (-2.640e-02)Fertility*Education +(-6.148e-05)Fertility * Education * Catholic
 
 new.data = data.frame(Fertility = 15, Education = 15, Catholic = 30)
 
 predict(model, new.data, interval = "confidence")
 # fit      lwr      upr
-# 82.94383 54.39527 111.4924
+# 72.74269 53.96525 91.52014
 
-# Вывод: Прогноз модели оценивается как 82.94383;
-# Доверительный интервал для свободного коэффициентa = [54.39527,111.4924]
+# Р’С‹РІРѕРґ: РџСЂРѕРіРЅРѕР· РјРѕРґРµР»Рё РѕС†РµРЅРёРІР°РµС‚СЃСЏ РєР°Рє 72.74269;
+# Р”РѕРІРµСЂРёС‚РµР»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» РґР»СЏ СЃРІРѕР±РѕРґРЅРѕРіРѕ РєРѕСЌС„С„РёС†РёРµРЅС‚a = [53.96525,91.52014]

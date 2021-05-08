@@ -13,11 +13,11 @@ data <- rlms_read("C:\\Users\\vladb\\Downloads\\r22i_os26c.sav")
 glimpse(data)
 data2 = select(data, rj13.2, r_age, rh5, r_educ, status, rj6.2, r_marst)
 
-#Óáèğàåì ñòğîêè ñ NA
+#Ğ£Ğ±Ğ¸Ñ€Ğ°ĞµĞ¼ ÑÑ‚Ñ€Ğ¾ĞºĞ¸ Ñ NA
 data2 = na.omit(data2)
 glimpse(data2)
 
-#çàğïëàòà c ıëåìåíòàìè íîğìàëèçàöèè
+#Ğ·Ğ°Ñ€Ğ¿Ğ»Ğ°Ñ‚Ğ° c ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚Ğ°Ğ¼Ğ¸ Ğ½Ğ¾Ñ€Ğ¼Ğ°Ğ»Ğ¸Ğ·Ğ°Ñ†Ğ¸Ğ¸
 data2$rj13.2
 sal = as.numeric(data2$rj13.2)
 sal1 = as.character(data2$rj13.2)
@@ -27,189 +27,189 @@ mean(sal)
 data2["salary"] = (sal - mean(sal)) / sqrt(var(sal))
 data2["salary"]
 
-#âîçğàñò c ıëåìåíòàìè íîğìàëèçàöèè
+#Ğ²Ğ¾Ğ·Ñ€Ğ°ÑÑ‚ c ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚Ğ°Ğ¼Ğ¸ Ğ½Ğ¾Ñ€Ğ¼Ğ°Ğ»Ğ¸Ğ·Ğ°Ñ†Ğ¸Ğ¸
 age1 = as.character(data2$r_age)
 age2 = lapply(age1, as.integer)
 age3 = as.numeric(unlist(age2))
 data2["age"]= (age3 - mean(age3)) / sqrt(var(age3))
 data2["age"]
 
-#ïîë
+#Ğ¿Ğ¾Ğ»
 #data2["sex"]=data2$rh5
 #data2["sex"] = lapply(data2$rh5, as.character)
 data2$sex = as.numeric(data2$rh5)
-data2$sex[which(data2$sex!='1')] <- 0 #æåíñêèé
-data2$sex[which(data2$sex=='1')] <- 1 #ìóæñêîé
+data2$sex[which(data2$sex!='1')] <- 0 #Ğ¶ĞµĞ½ÑĞºĞ¸Ğ¹
+data2$sex[which(data2$sex=='1')] <- 1 #Ğ¼ÑƒĞ¶ÑĞºĞ¾Ğ¹
 
 
-#îáğàçîâàíèå
+#Ğ¾Ğ±Ñ€Ğ°Ğ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ
 #data2["r_educ"] = data2$r_educ
 #data2["r_educ"] = lapply(data2$r_educ, as.character)
 #data2["higher_educ"] = data2$r_educ
 data2$r_educ = as.numeric(data2$r_educ)
-data2$r_educ[which(data2$r_educ=='21')] <- 1 #åñòü äèïëîì î âûñøåì îáğàçîâàíèè
-data2$r_educ[which(data2$r_educ=='22')] <- 1 #àñïèğàíòóğà è ò.ï. áåç äèïëîìà
-data2$r_educ[which(data2$r_educ=='23')] <- 1 #àñïèğàíòóğà è ò.ï. ñ äèïëîìîì
+data2$r_educ[which(data2$r_educ=='21')] <- 1 #ĞµÑÑ‚ÑŒ Ğ´Ğ¸Ğ¿Ğ»Ğ¾Ğ¼ Ğ¾ Ğ²Ñ‹ÑÑˆĞµĞ¼ Ğ¾Ğ±Ñ€Ğ°Ğ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğ¸
+data2$r_educ[which(data2$r_educ=='22')] <- 1 #Ğ°ÑĞ¿Ğ¸Ñ€Ğ°Ğ½Ñ‚ÑƒÑ€Ğ° Ğ¸ Ñ‚.Ğ¿. Ğ±ĞµĞ· Ğ´Ğ¸Ğ¿Ğ»Ğ¾Ğ¼Ğ°
+data2$r_educ[which(data2$r_educ=='23')] <- 1 #Ğ°ÑĞ¿Ğ¸Ñ€Ğ°Ğ½Ñ‚ÑƒÑ€Ğ° Ğ¸ Ñ‚.Ğ¿. Ñ Ğ´Ğ¸Ğ¿Ğ»Ğ¾Ğ¼Ğ¾Ğ¼
 
-#íàñåëåííûé ïóíêò
+#Ğ½Ğ°ÑĞµĞ»ĞµĞ½Ğ½Ñ‹Ğ¹ Ğ¿ÑƒĞ½ĞºÑ‚
 #data2["status1"]=data2$status
 #data2["status1"] = lapply(data2$status, as.character)
 data2$status1 = as.numeric(data2$status)
-data2$status1[which(data2$status1=='1')] <- 1 #îáëàñòíîé öåíòğ
-data2$status1[which(data2$status1=='2')] <- 1 #ãîğîä
+data2$status1[which(data2$status1=='1')] <- 1 #Ğ¾Ğ±Ğ»Ğ°ÑÑ‚Ğ½Ğ¾Ğ¹ Ñ†ĞµĞ½Ñ‚Ñ€
+data2$status1[which(data2$status1=='2')] <- 1 #Ğ³Ğ¾Ñ€Ğ¾Ğ´
 
 
-#ïğîäîëæèòåëüíîñòü ğàáî÷åé íåäåëè
+#Ğ¿Ñ€Ğ¾Ğ´Ğ¾Ğ»Ğ¶Ğ¸Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ÑÑ‚ÑŒ Ñ€Ğ°Ğ±Ğ¾Ñ‡ĞµĞ¹ Ğ½ĞµĞ´ĞµĞ»Ğ¸
 dur1 = as.character(data2$rj6.2)
 dur2 = lapply(dur1, as.integer)
 dur3 = as.numeric(unlist(dur2))
 data2["dur"] = (dur3 - mean(dur3)) / sqrt(var(dur3))
 
-#ñåìåéíîå ïîëîæåíèå
+#ÑĞµĞ¼ĞµĞ¹Ğ½Ğ¾Ğµ Ğ¿Ğ¾Ğ»Ğ¾Ğ¶ĞµĞ½Ğ¸Ğµ
 #data2["wed"]= data2$r_marst
 #data2["wed"] = lapply(data2$r_marst, as.character)
 data2$wed = as.numeric(data2$r_marst)
-data2$wed[which(data2$wed=='1')] <- 1 #íèêîãäà íå áûëè â áğàêå
-data2$wed[which(data2$wed=='2')] <- 1 # Ñîñòîÿò â çàğåãèñòğèğîâàííîì áğàêå
+data2$wed[which(data2$wed=='1')] <- 1 #Ğ½Ğ¸ĞºĞ¾Ğ³Ğ´Ğ° Ğ½Ğµ Ğ±Ñ‹Ğ»Ğ¸ Ğ² Ğ±Ñ€Ğ°ĞºĞµ
+data2$wed[which(data2$wed=='2')] <- 1 # Ğ¡Ğ¾ÑÑ‚Ğ¾ÑÑ‚ Ğ² Ğ·Ğ°Ñ€ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ğ¾Ğ¼ Ğ±Ñ€Ğ°ĞºĞµ
 
 
 #data2["wed2"] = lapply(data2["wed"], as.character)
 data2$wed2 = as.numeric(data2$r_marst)
-data2$wed2[which(data2$wed=='4')] <- 1 # Ğàçâåäåíû
-data2$wed2[which(data2$wed=='5')] <- 1 # Bäîâåö/âäîâà
+data2$wed2[which(data2$wed=='4')] <- 1 # Ğ Ğ°Ğ·Ğ²ĞµĞ´ĞµĞ½Ñ‹
+data2$wed2[which(data2$wed=='5')] <- 1 # BĞ´Ğ¾Ğ²ĞµÑ†/Ğ²Ğ´Ğ¾Ğ²Ğ°
 
 #data2$wed2 = as.numeric(data2$wed2)
 
 #data2["wed3"] = lapply(data2["wed"], as.character)
 data2$wed3 = as.numeric(data2$r_marst)
-data2$wed3[which(data2$wed=='3')] <- 1 # Æèâåòå âìåñòå, íî íå çàğåãèñòğèğîâàíû
-data2$wed3[which(data2$wed=='6')] <- 1 # ÎÔÈÖÈÀËÜÍÎ ÇÀĞÅÃÈÑÒĞÈĞÎÂÀÍÛ, ÍÎ ÂÌÅÑÒÅ ÍÅ ÏĞÎÆÈÂÀŞÒ
+data2$wed3[which(data2$wed=='3')] <- 1 # Ğ–Ğ¸Ğ²ĞµÑ‚Ğµ Ğ²Ğ¼ĞµÑÑ‚Ğµ, Ğ½Ğ¾ Ğ½Ğµ Ğ·Ğ°Ñ€ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ñ‹
+data2$wed3[which(data2$wed=='6')] <- 1 # ĞĞ¤Ğ˜Ğ¦Ğ˜ĞĞ›Ğ¬ĞĞ Ğ—ĞĞ Ğ•Ğ“Ğ˜Ğ¡Ğ¢Ğ Ğ˜Ğ ĞĞ’ĞĞĞ«, ĞĞ Ğ’ĞœĞ•Ğ¡Ğ¢Ğ• ĞĞ• ĞŸĞ ĞĞ–Ğ˜Ğ’ĞĞ®Ğ¢
 
 data3 = select(data2, salary, age, sex, r_educ, status1, dur, wed, wed2, wed3)
 
-#ïîñòğîåíèå çàâèñèìîñòåé äëÿ äàííûõ 
+#Ğ¿Ğ¾ÑÑ‚Ñ€Ğ¾ĞµĞ½Ğ¸Ğµ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ĞµĞ¹ Ğ´Ğ»Ñ Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ… 
 model = lm(data = data3, salary~age + sex + r_educ + status1 + dur + wed + wed2 + wed3)
 summary(model)
 vif(model)
-#R^2 = 0.1339 - î÷åíü íèçêèé
-#p-õàğàêòåğèñòèêà ó âñåõ çíà÷åíèé (***), êğîìå wed2 (**)
+#R^2 = 0.1339 - Ğ¾Ñ‡ĞµĞ½ÑŒ Ğ½Ğ¸Ğ·ĞºĞ¸Ğ¹
+#p-Ñ…Ğ°Ñ€Ğ°ĞºÑ‚ĞµÑ€Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ñƒ Ğ²ÑĞµÑ… Ğ·Ğ½Ğ°Ñ‡ĞµĞ½Ğ¸Ğ¹ (***), ĞºÑ€Ğ¾Ğ¼Ğµ wed2 (**)
 
-# 2. Ïîıêñïåğèìåíòèğóéòå ñ ôóíêöèÿìè âåùåñòâåííûõ ïàğàìåòğîâ: èñïîëüçóéòå ëîãàğèôì è ñòåïåíè (õîòÿ áû îò 0.1 äî 2 ñ øàãîì 0.1).
+# 2. ĞŸĞ¾ÑĞºÑĞ¿ĞµÑ€Ğ¸Ğ¼ĞµĞ½Ñ‚Ğ¸Ñ€ÑƒĞ¹Ñ‚Ğµ Ñ Ñ„ÑƒĞ½ĞºÑ†Ğ¸ÑĞ¼Ğ¸ Ğ²ĞµÑ‰ĞµÑÑ‚Ğ²ĞµĞ½Ğ½Ñ‹Ñ… Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²: Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·ÑƒĞ¹Ñ‚Ğµ Ğ»Ğ¾Ğ³Ğ°Ñ€Ğ¸Ñ„Ğ¼ Ğ¸ ÑÑ‚ĞµĞ¿ĞµĞ½Ğ¸ (Ñ…Ğ¾Ñ‚Ñ Ğ±Ñ‹ Ğ¾Ñ‚ 0.1 Ğ´Ğ¾ 2 Ñ ÑˆĞ°Ğ³Ğ¾Ğ¼ 0.1).
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^0.1) + I(age^0.1))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1691
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 7
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^0.2) + I(age^0.2))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1695
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 7
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^0.3) + I(age^0.3))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.17
-#ğ - óõóäøèëñÿ
-#vif <= 10 ~ åñòü ëèíåéíàé çàâèñèìîñòü
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
+#vif <= 10 ~ ĞµÑÑ‚ÑŒ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ°Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(age^0.4) + I(dur^0.4))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1704
-#ğ - óõóäøèëñÿ
-#vif <= 13 ~ åñòü ëèíåéíàé çàâèñèìîñòü
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
+#vif <= 13 ~ ĞµÑÑ‚ÑŒ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ°Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^0.4))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1413
-#ğ - óõóäøèëñÿ
-#vif <= 14 ~ åñòü ëèíåéíàé çàâèñèìîñòü
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
+#vif <= 14 ~ ĞµÑÑ‚ÑŒ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ°Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(age^0.4))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1595
-#ğ - óõóäøèëñÿ
-#vif <= 11 ~ åñòü ëèíåéíàé çàâèñèìîñòü
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
+#vif <= 11 ~ ĞµÑÑ‚ÑŒ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ°Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^0.4))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1413
-#ğ - óõóäøèëñÿ
-#vif <= 14 ~ åñòü ëèíåéíàé çàâèñèìîñòü
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
+#vif <= 14 ~ ĞµÑÑ‚ÑŒ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ°Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(age^2) + I(dur^2))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1488
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 3 
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(dur^2))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1345
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 3
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(age^2))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1484
-#ğ - ÷óòü-÷óòü õóæå, ÷åì ó èñõîäíîé ìîäåëè
+#Ñ€ - Ñ‡ÑƒÑ‚ÑŒ-Ñ‡ÑƒÑ‚ÑŒ Ñ…ÑƒĞ¶Ğµ, Ñ‡ĞµĞ¼ Ñƒ Ğ¸ÑÑ…Ğ¾Ğ´Ğ½Ğ¾Ğ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸
 #vif <= 3
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(log(age)) + I(log(dur)))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1687
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 7
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(log(dur)))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1407
-#ğ - õóæå, ÷åì ó íà÷àëüíîé ìîäåëè, íî ëó÷øå, ÷åì ó îñòàëüíûõ ìîäåëåé ñî ñòåïåíÿìè è ëîãàğèôìàìè
+#Ñ€ - Ñ…ÑƒĞ¶Ğµ, Ñ‡ĞµĞ¼ Ñƒ Ğ½Ğ°Ñ‡Ğ°Ğ»ÑŒĞ½Ğ¾Ğ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸, Ğ½Ğ¾ Ğ»ÑƒÑ‡ÑˆĞµ, Ñ‡ĞµĞ¼ Ñƒ Ğ¾ÑÑ‚Ğ°Ğ»ÑŒĞ½Ñ‹Ñ… Ğ¼Ğ¾Ğ´ĞµĞ»ĞµĞ¹ ÑĞ¾ ÑÑ‚ĞµĞ¿ĞµĞ½ÑĞ¼Ğ¸ Ğ¸ Ğ»Ğ¾Ğ³Ğ°Ñ€Ğ¸Ñ„Ğ¼Ğ°Ğ¼Ğ¸
 #vif <= 5
 
 model_test_1 = lm(data = data3, salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(log(age)))
 summary(model_test_1)
 vif(model_test_1)
 #R^2 = 0.1596
-#ğ - óõóäøèëñÿ
+#Ñ€ - ÑƒÑ…ÑƒĞ´ÑˆĞ¸Ğ»ÑÑ
 #vif <= 7
 
-#Èòîã: ëó÷øàÿ ìîäåëü ıòî salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(log(dur))
-#ïğîâåğèì ìîäåëü íà ëèíåéíóş çàâèñèìîñòü ïàğàìåòğîâ
+#Ğ˜Ñ‚Ğ¾Ğ³: Ğ»ÑƒÑ‡ÑˆĞ°Ñ Ğ¼Ğ¾Ğ´ĞµĞ»ÑŒ ÑÑ‚Ğ¾ salary~ age + sex + r_educ + status1 + dur + wed + wed2 + wed3 + I(log(dur))
+#Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€Ğ¸Ğ¼ Ğ¼Ğ¾Ğ´ĞµĞ»ÑŒ Ğ½Ğ° Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½ÑƒÑ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
 modele_1 = lm(dur~I(log(dur)), data3)
 modele_1
-summary(modele_1) # R^2 =  0.8063 < 0.8, çíà÷èò íåò ëèíåéíîé çàâèñèìîñòè è ìîæíî èñïîëüçîâàòü â îäíîé ìîäåëè
+summary(modele_1) # R^2 =  0.8063 < 0.8, Ğ·Ğ½Ğ°Ñ‡Ğ¸Ñ‚ Ğ½ĞµÑ‚ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ¾Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚Ğ¸ Ğ¸ Ğ¼Ğ¾Ğ¶Ğ½Ğ¾ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ÑŒ Ğ² Ğ¾Ğ´Ğ½Ğ¾Ğ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸
 
 modele_2 = lm(age~I(dur^2), data3)
 modele_2
-summary(modele_2) # R^2 =  3.001e-05 < 0.1 , çíà÷èò íåò ëèíåéíîé çàâèñèìîñòè è ìîæíî èñïîëüçîâàòü â îäíîé ìîäåëè
+summary(modele_2) # R^2 =  3.001e-05 < 0.1 , Ğ·Ğ½Ğ°Ñ‡Ğ¸Ñ‚ Ğ½ĞµÑ‚ Ğ»Ğ¸Ğ½ĞµĞ¹Ğ½Ğ¾Ğ¹ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚Ğ¸ Ğ¸ Ğ¼Ğ¾Ğ¶Ğ½Ğ¾ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ÑŒ Ğ² Ğ¾Ğ´Ğ½Ğ¾Ğ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸
 
-#Âûâîä: áîëåå âûñîêóş ÇÏ ïîëó÷àşò ìóæ÷èíû ìîëîäîãî âîçğàñòà áåç âûñøåãî îáğàçîâàíèÿ, ğàáîòàşùèå â îáëàñòíîì öåíòğå , ïåğåğàáàòûâàşùèå, 
-# íå ñîñòîÿâøèå â áğàêå èëè âäîâåö èëè îôèöèàëüíî çàğåãèñòğèğîâàííûå, íî íå ïğîæèâàşùèå âìåñòå.
+#Ğ’Ñ‹Ğ²Ğ¾Ğ´: Ğ±Ğ¾Ğ»ĞµĞµ Ğ²Ñ‹ÑĞ¾ĞºÑƒÑ Ğ—ĞŸ Ğ¿Ğ¾Ğ»ÑƒÑ‡Ğ°ÑÑ‚ Ğ¼ÑƒĞ¶Ñ‡Ğ¸Ğ½Ñ‹ Ğ¼Ğ¾Ğ»Ğ¾Ğ´Ğ¾Ğ³Ğ¾ Ğ²Ğ¾Ğ·Ñ€Ğ°ÑÑ‚Ğ° Ğ±ĞµĞ· Ğ²Ñ‹ÑÑˆĞµĞ³Ğ¾ Ğ¾Ğ±Ñ€Ğ°Ğ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ, Ñ€Ğ°Ğ±Ğ¾Ñ‚Ğ°ÑÑ‰Ğ¸Ğµ Ğ² Ğ¾Ğ±Ğ»Ğ°ÑÑ‚Ğ½Ğ¾Ğ¼ Ñ†ĞµĞ½Ñ‚Ñ€Ğµ , Ğ¿ĞµÑ€ĞµÑ€Ğ°Ğ±Ğ°Ñ‚Ñ‹Ğ²Ğ°ÑÑ‰Ğ¸Ğµ, 
+# Ğ½Ğµ ÑĞ¾ÑÑ‚Ğ¾ÑĞ²ÑˆĞ¸Ğµ Ğ² Ğ±Ñ€Ğ°ĞºĞµ Ğ¸Ğ»Ğ¸ Ğ²Ğ´Ğ¾Ğ²ĞµÑ† Ğ¸Ğ»Ğ¸ Ğ¾Ñ„Ğ¸Ñ†Ğ¸Ğ°Ğ»ÑŒĞ½Ğ¾ Ğ·Ğ°Ñ€ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ğµ, Ğ½Ğ¾ Ğ½Ğµ Ğ¿Ñ€Ğ¾Ğ¶Ğ¸Ğ²Ğ°ÑÑ‰Ğ¸Ğµ Ğ²Ğ¼ĞµÑÑ‚Ğµ.
 
 #(Intercept)      age          sex       r_educ      status1          dur          wed         wed2         wed3    I(log(dur))  
 #0.009378    -0.100804     0.452144    -0.030679    -0.154806     0.068537    -0.086875     0.143205     0.152724     0.056648    
 
-#Èùåì ïîäìíîæåñòâà: "Æåíùèíû íå çàìóæåì"
+#Ğ˜Ñ‰ĞµĞ¼ Ğ¿Ğ¾Ğ´Ğ¼Ğ½Ğ¾Ğ¶ĞµÑÑ‚Ğ²Ğ°: "Ğ–ĞµĞ½Ñ‰Ğ¸Ğ½Ñ‹ Ğ½Ğµ Ğ·Ğ°Ğ¼ÑƒĞ¶ĞµĞ¼"
 data4 = subset(data3, sex == 0)
 data4
 
 data5 = subset(data4, wed2 == 1)
 data5
 
-# Èùåì ïîäìíîæåñòâî: "æåíùèíû, æèâóùèå â ãîğîäå, ğàçâåäåííûå"
+# Ğ˜Ñ‰ĞµĞ¼ Ğ¿Ğ¾Ğ´Ğ¼Ğ½Ğ¾Ğ¶ĞµÑÑ‚Ğ²Ğ¾: "Ğ¶ĞµĞ½Ñ‰Ğ¸Ğ½Ñ‹, Ğ¶Ğ¸Ğ²ÑƒÑ‰Ğ¸Ğµ Ğ² Ğ³Ğ¾Ñ€Ğ¾Ğ´Ğµ, Ñ€Ğ°Ğ·Ğ²ĞµĞ´ĞµĞ½Ğ½Ñ‹Ğµ"
 data6 = subset(data3, sex == 0)
 data6
 
@@ -219,13 +219,16 @@ data7
 data8 = subset(data7, wed2 == 1)
 data8
 
-model_subset = lm(data = data5, salary~age + sex + r_educ + status1 + dur + wed + wed2 + wed3)
+#Ñ‚Ğ°Ğº ĞºĞ°Ğº Ñ€ĞµĞ³Ñ€ĞµÑÑĞ¾Ñ€ sex = const Ğ¸ wed2 = const, Ñ‚Ğ¾ ÑƒĞ±ĞµÑ€ĞµĞ¼ Ğ¸Ñ… Ğ¸Ğ· Ğ½Ğ°ÑˆĞµĞ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸, Ğ¿Ğ¾Ñ‚Ğ¾Ğ¼Ñƒ Ñ‡Ñ‚Ğ¾ ÑÑ‚Ñ€Ğ¾Ğ¸Ñ‚ÑŒ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ Ğ¾Ñ‚ const Ğ½Ğµ Ğ¸Ğ¼ĞµĞµÑ‚ ÑĞ¼Ñ‹ÑĞ»Ğ°; Ñ‚.Ğº.wed = wed3 , Ñ‚Ğ¾ ÑƒĞ±ĞµÑ€ĞµĞ¼ wed3 Ğ¸Ğ· Ğ½Ğ°ÑˆĞµĞ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸.
+model_subset = lm(data = data5, salary~age + r_educ + status1 + dur + wed)
 summary(model_subset)
 # R^2 = 0.08617
-# Íàèâûñøóş çàğïëàòó ïîëó÷àşò ìóæ÷èíû , áåç âûñøåãî îáğàçîâàíèÿ, ğàáîòàşùèå íå â ãîğîäå, è ïåğåğàáàòûâàşùèå
+# ĞĞ°Ğ¸Ğ²Ñ‹ÑÑˆÑƒÑ Ğ·Ğ°Ñ€Ğ¿Ğ»Ğ°Ñ‚Ñƒ Ğ¿Ğ¾Ğ»ÑƒÑ‡Ğ°ÑÑ‚ Ğ¶ĞµĞ½Ñ‰Ğ¸Ğ½Ñ‹ Ğ¼Ğ¾Ğ»Ğ¾Ğ´Ğ¾Ğ³Ğ¾ Ğ²Ğ¾Ğ·Ñ€Ğ°ÑÑ‚Ğ°, Ğ±ĞµĞ· Ğ²Ñ‹ÑÑˆĞµĞ³Ğ¾ Ğ¾Ğ±Ñ€Ğ°Ğ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ, Ñ€Ğ°Ğ±Ğ¾Ñ‚Ğ°ÑÑ‰Ğ¸Ğµ Ğ½Ğµ Ğ² Ğ³Ğ¾Ñ€Ğ¾Ğ´Ğµ, Ğ¿ĞµÑ€ĞµÑ€Ğ°Ğ±Ğ°Ñ‚Ñ‹Ğ²Ğ°ÑÑ‰Ğ¸Ğµ Ğ¸ Ğ½Ğµ ÑĞ¾ÑÑ‚Ğ¾ÑĞ²ÑˆĞ¸Ğµ Ğ² Ğ±Ñ€Ğ°ĞºĞµ
 
-model_subset = lm(data = data8,salary~age + sex + r_educ + status1 + dur + wed + wed2 + wed3)
+#Ñ‚Ğ°Ğº ĞºĞ°Ğº Ñ€ĞµĞ³Ñ€ĞµÑÑĞ¾Ñ€ sex = const Ğ¸ wed2 = const, status1 = const, Ñ‚Ğ¾ ÑƒĞ±ĞµÑ€ĞµĞ¼ Ğ¸Ñ… Ğ¸Ğ· Ğ½Ğ°ÑˆĞµĞ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸, Ğ¿Ğ¾Ñ‚Ğ¾Ğ¼Ñƒ Ñ‡Ñ‚Ğ¾ ÑÑ‚Ñ€Ğ¾Ğ¸Ñ‚ÑŒ Ğ·Ğ°Ğ²Ğ¸ÑĞ¸Ğ¼Ğ¾ÑÑ‚ÑŒ Ğ¾Ñ‚ const Ğ½Ğµ Ğ¸Ğ¼ĞµĞµÑ‚ ÑĞ¼Ñ‹ÑĞ»Ğ°; Ñ‚.Ğº.wed = wed3 , Ñ‚Ğ¾ ÑƒĞ±ĞµÑ€ĞµĞ¼ wed3 Ğ¸Ğ· Ğ½Ğ°ÑˆĞµĞ¹ Ğ¼Ğ¾Ğ´ĞµĞ»Ğ¸.
+model_subset = lm(data = data8,salary~age + r_educ + dur + wed)
 summary(model_subset)
 # R^2 = 0.06726
-# Íàèâûñøóş çàğïëàòó ïîëó÷àşò ìóæ÷èíû, áåç âûñøåãî îáğàçîâàíèÿ è ïåğåğàáàòûâàşùèå
+# ĞĞ°Ğ¸Ğ²Ñ‹ÑÑˆÑƒÑ Ğ·Ğ°Ñ€Ğ¿Ğ»Ğ°Ñ‚Ñƒ Ğ¿Ğ¾Ğ»ÑƒÑ‡Ğ°ÑÑ‚ Ğ¶ĞµĞ½Ñ‰Ğ¸Ğ½Ñ‹ Ğ¼Ğ¾Ğ»Ğ¾Ğ´Ğ¾Ğ³Ğ¾ Ğ²Ğ¾Ğ·Ñ€Ğ°ÑÑ‚Ğ°, Ğ¶Ğ¸Ğ²ÑƒÑ‰Ğ¸Ğµ Ğ² Ğ³Ğ¾Ñ€Ğ¾Ğ´Ğµ, Ñ€Ğ°Ğ·Ğ²ĞµĞ´ĞµĞ½Ğ½Ñ‹Ğµ Ğ¸Ğ»Ğ¸ ĞºĞ¾Ñ‚Ğ¾Ñ€Ñ‹Ğµ Ğ½Ğ¸ĞºĞ¾Ğ³Ğ´Ğ° Ğ½Ğµ Ğ±Ñ‹Ğ»Ğ¸ Ğ² Ğ±Ñ€Ğ°ĞºĞµ, Ğ±ĞµĞ· Ğ²Ñ‹ÑÑˆĞµĞ³Ğ¾ Ğ¾Ğ±Ñ€Ğ°Ğ·Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ Ğ¸ Ğ¿ĞµÑ€ĞµÑ€Ğ°Ğ±Ğ°Ñ‚Ñ‹Ğ²Ğ°ÑÑ‰Ğ¸Ğµ
+
 
